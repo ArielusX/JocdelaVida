@@ -29,6 +29,7 @@ public class Programa {
 					switch(n) {
 	
 					case 1://Ola
+							Joc.inicialitzarTauler();
 							break;
 					case 2://Ola
 							break;
