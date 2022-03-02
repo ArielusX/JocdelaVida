@@ -2,7 +2,53 @@ package JocdelaVida;
 
 import java.util.Scanner;
 
-public class Joc {
+public class Joc {public static void main(String[] args) {
+	// TODO Auto-generated method stub
+	int n=0;
+	do{
+		boolean correcte=false;
+		String jugadores[]=null;
+		System.out.println("Bienvenido al juego del colgado");
+
+		System.out.println("Presiona el numero correspondiente a la opción que deseas");
+		System.out.println("	INICIALIZAR TABLERO: Presiona 1");
+		System.out.println("	VISUALIZAR TABLERO: Presiona 2");
+		System.out.println("	ITERAR: Presiona 3");
+		System.out.println("	SALIR: Presiona 0");
+		
+	do {
+		try {
+			//String Player=null;
+			n=source.nextInt();
+			source.nextLine();
+			if(n>=0 && n<5) {
+				switch(n) {
+
+				case 1:
+						Jugar();
+						break;
+				case 2://Ola
+						break;
+				case 3:
+					//Ola
+						break;
+				case 4://Ola
+				
+				}
+				correcte=true;
+			}else {
+				System.out.println("El valor introducido no corresponde a ninguna opción del programa");
+		}
+
+		}catch(Exception e){
+			System.out.println("Introduciste cualquier otra cosa, ¡lee las instrucciones!");
+			source.nextLine();
+		}
+	}while(!correcte);
+	}while(n!=0);
+	System.out.println("Gracias por jugar");
+
+}
 	
 	//es demanaran les dimensions (files i columnes) del tauler (que hauran de ser entre 4 i 10)
 	//tauler mida definida, tot mort
@@ -12,9 +58,20 @@ public class Joc {
 	
 	static Scanner source = new Scanner (System.in);
 	
-	public static void inicialitzarTauler() {
-			
+	public static void Jugar() {
 		int[] dimension=dimensions();
+		
+		int [][]taula=inicialitzarTauler(dimension);
+
+		int iterar=numiterar();
+		
+		taula=iteraciones(iterar,taula,dimension);
+		
+		print(dimension, taula);
+	}
+	
+	public static int[][] inicialitzarTauler(int[] dimension) {
+			
 		
 		int [][]taula=new int[dimension[0]][dimension[1]];
 		
@@ -23,17 +80,14 @@ public class Joc {
 		int vives=randomvives(dimension);		
 		
 		//Coloca les cel·lules aleatoriament
-		taula=colocarcelulas(dimension,vives,taula);
+		//taula=colocarcelulas(dimension,vives,taula);
 		
 		//Coloca les cel·lules en posicions determinades
-		//taula=colocarcelulasejemplo(dimension,taula);
-
-		int iterar=numiterar();
-		
-		taula=iteraciones(iterar,taula,dimension);
+		taula=colocarcelulasejemplo(dimension,taula);
 		
 		print(dimension, taula);
 
+		return taula;
 	}
 	public static int numiterar() {
 		System.out.println("Introduce el numero de iteraciones: ");
