@@ -1,20 +1,95 @@
 package JocdelaVida;
 
 import java.util.Scanner;
-
+/**
+ * <h2>clase Joc, clase que contiene el juego de la vida en su totalidad </h2>
+ * 
+ * @version 1
+ * @author Lucas Lugo
+ * @since 05-03-2022
+ */
 public class Joc {
-	
-	//es demanaran les dimensions (files i columnes) del tauler (que hauran de ser entre 4 i 10)
-	//tauler mida definida, tot mort
-	//sorteix cel vives
-	//num aleatoris celula
-	
-	
+
 	static Scanner source = new Scanner (System.in);
-	
-	public static void inicialitzarTauler() {
+    /**
+     * Método principal del programa, que distribuye las funciones del programa
+     * @param args recibe argumentos en entrada (No utilizado)
+     */
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		int n=0;
+		int [][]taula=null;
+		int[] dimension=null;
+		do{
+			boolean correcte=false;
+			System.out.println("Bienvenido al juego de la vida");
+
+			System.out.println("Presiona el numero correspondiente a la opción que deseas");
+			System.out.println("	INICIALIZAR TABLERO: Presiona 1");
+			System.out.println("	VISUALIZAR TABLERO: Presiona 2");
+			System.out.println("	ITERAR: Presiona 3");
+			System.out.println("	SALIR: Presiona 0");
 			
-		int[] dimension=dimensions();
+		do {
+			try {
+				//String Player=null;
+				n=source.nextInt();
+				source.nextLine();
+				
+
+				if(n>=0 && n<5) {
+					switch(n) {
+	
+					case 1:
+							dimension=dimensions();
+							taula =inicialitzarTauler(dimension);
+							break;
+					case 2:	
+							if(taula!=null) {
+								print(dimension,taula);
+							}else {
+								System.out.println("La tabla aún no está inicializada");
+							}
+							break;
+					case 3:
+							taula=jugar(taula, dimension);
+							
+					
+					}
+					correcte=true;
+				}else {
+					System.out.println("El valor introducido no corresponde a ninguna opción del programa");
+			}
+	
+			}catch(Exception e){
+				System.out.println("Introduciste cualquier otra cosa, ¡lee las instrucciones!");
+				source.nextLine();
+			}
+		}while(!correcte);
+		}while(n!=0);
+		System.out.println("Gracias por jugar");
+	}
+    /**
+     * Método que ejecuta la partida
+     * @param dimension Recibe las dimensiones del tablero en forma de vector de enteros
+     * @param taula Recibe la tabla vacia
+     * @return Devuelve la tabla inicializada
+     * 
+     */
+	public static int[][] jugar(int[][] taula, int[]dimension){
+		
+		int iterar=numiterar();
+		
+		taula=iteraciones(iterar,taula,dimension);
+		
+		return taula;
+	}	
+    /**
+     * Método que inicia el tablero
+     * @param dimension Recibe las dimensiones del tablero en forma de vector de enteros
+     * @return Devuelve la tabla inicializada
+     */
+	public static int[][] inicialitzarTauler(int[] dimension) {
 		
 		int [][]taula=new int[dimension[0]][dimension[1]];
 		
@@ -28,13 +103,13 @@ public class Joc {
 		//Coloca les cel·lules en posicions determinades
 		//taula=colocarcelulasejemplo(dimension,taula);
 
-		int iterar=numiterar();
-		
-		taula=iteraciones(iterar,taula,dimension);
-		
-		print(dimension, taula);
+		return taula;
 
 	}
+    /**
+     * Método que pide al usuario el numero de iteraciones
+     * @return Devuelve el valor introducido por teclado
+     */
 	public static int numiterar() {
 		System.out.println("Introduce el numero de iteraciones: ");
 		int n=0;
@@ -46,7 +121,13 @@ public class Joc {
 		}
 		return n;
 	}
-	
+    /**
+     * Método que itera los cambios a la tabla el numero de veces determinado anteriormente
+     * @param iterar Recibe el numero de iteraciones que debe llevar a cabo
+     * @param taula Recibe la tabla en forma de matriz
+     * @param dimension Recibe las dimensiones del tablero en forma de vector de enteros
+     * @return Devuelve la tabla modificada
+     */
 	public static int[][] iteraciones(int iterar,int[][]taula, int []dimension) {
 		for(int i=0;i<iterar;i++) {
 			taula=celules(dimension,taula);
@@ -54,7 +135,12 @@ public class Joc {
 		}
 		return taula;
 	}
-	
+    /**
+     * Método que establece el tablero vacio
+     * @param taula Recibe la tabla en su estado inicial en forma de matriz
+     * @param dimension Recibe las dimensiones del tablero en forma de vector de enteros
+     * @return Devuelve la tabla modificada
+     */
 	public static int [][] iniciarvuit(int[]dimension, int[][]taula){
 		for (int i = 0; i < dimension[0]; i++) {
 			for (int j = 0; j < dimension[1]; j++) { 
@@ -65,7 +151,13 @@ public class Joc {
 		}
 		return taula;
 	}
-	
+    /**
+     * Método que coloca las celulas en posiciones aleatorias
+     * @param taula Recibe la tabla en su estado inicial en forma de matriz
+     * @param dim Recibe las dimensiones del tablero en forma de vector de enteros
+     * @param vives Recibe el numero de celulas vivas que debe colocar
+     * @return Devuelve la tabla modificada
+     */
 	public static int[][] colocarcelulas(int[] dim, int vives, int[][]taula) {
 	
 		for(int i=0;i<vives;i++) {
@@ -81,7 +173,12 @@ public class Joc {
 		}
 		return taula;
 	}
-	
+    /**
+     * Método que coloca las celulas en posiciones determinadas por el usuario
+     * @param taula Recibe la tabla en su estado inicial en forma de matriz
+     * @param dim Recibe las dimensiones del tablero en forma de vector de enteros
+     * @return Devuelve la tabla modificada
+     */
 	public static int[][] colocarcelulasejemplo(int[] dim, int[][]taula) {
 		
 		taula[0][4]=1;
@@ -102,21 +199,32 @@ public class Joc {
 		
 		return taula;
 	}
-	
+    /**
+     * Método que develve un numero aleatorio (entre 2 valores) de celulas vivas inicial
+     * @param dim Recibe las dimensiones del tablero en forma de vector de enteros
+     * @return Devuelve el valor introducido por teclado
+     */
 	public static int randomvives(int[] dim) {
 		int max=dim[0]*dim[1];
 		int ran=(int)Math.floor(Math.random()*((max/2)+1 - max/4) + max/4);
 		return ran;
 		
 	}
-	
+    /**
+     * Método que devuelve un numero random que determina la posicion de las celulas
+     * @param dim Recibe las dimensiones del tablero en forma de vector de enteros
+     * @return Devuelve el valor introducido por teclado
+     */
 	public static int random(int[] dim) {
 		int max=dim[0]*dim[1];
 		int ran=(int)Math.floor(Math.random()*(max));
 		return ran;
 		
 	}
-	
+    /**
+     * Método que pide al usuario las dimensiones del tablero
+     * @return Devuelve los valores introducidos por teclado en forma de vector
+     */
 	public static int[] dimensions() {
 		int t =0;
 		int[] xy =new int [2];
@@ -132,7 +240,7 @@ public class Joc {
 				boolean valid=false;
 				while(!valid) {
 					n=source.nextInt();
-					if(n<4 || n>101) {
+					if(n<4 || n>10) {
 						System.out.println("El numero debe estar entre el 4 y el 10");
 					}else {
 						xy[t]=n;
@@ -150,7 +258,12 @@ public class Joc {
 		System.out.println("Las dimensiones del tablero son: "+xy[0]+" por "+xy[1]);
 		return xy;
 	}
-	
+    /**
+     * Método que lleva a cabo los cambios de estado del tablero
+     * @param taula Recibe la tabla en su estado inicial en forma de matriz
+     * @param dim Recibe las dimensiones del tablero en forma de vector de enteros
+     * @return Devuelve la tabla modificada
+     */
 	public static int[][] celules(int[] dim, int[][]taula) {
 
 		int vecinas =0;
@@ -188,11 +301,14 @@ public class Joc {
 		taula=taulaaux.clone();
 		return taula;
 	}
-		
-	public static int print(int []xy, int[][]taula) {
+    /**
+     * Método que imprime por consola el estado actual de la tabla.
+     * @param taula Recibe la tabla en su estado inicial en forma de matriz
+     * @param xy Recibe las dimensiones del tablero en forma de vector de enteros
+     */
+	public static void print(int []xy, int[][]taula) {
 		int fila=0;
 		int col=0;
-		int res=0;
 		System.out.println();
 		for(int i=0;i<=xy[1];i++) {
 			if(i==0) {
@@ -221,7 +337,6 @@ public class Joc {
 			
 				if(taula[i][j]==1) {
 					System.out.print("O ");
-					res=1;
 				}else if(taula[i][j]==0){
 					System.out.print("  ");
 				}else {
@@ -229,7 +344,6 @@ public class Joc {
 				}
 			}
 		}
-		return res;
 	}
 }
 
