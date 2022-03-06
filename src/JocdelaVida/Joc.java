@@ -22,6 +22,7 @@ public class Joc {
 		int[] dimension=null;
 		do{
 			boolean correcte=false;
+			System.out.println();
 			System.out.println("Bienvenido al juego de la vida");
 
 			System.out.println("Presiona el numero correspondiente a la opción que deseas");
@@ -52,7 +53,8 @@ public class Joc {
 							}
 							break;
 					case 3:
-							taula=jugar(taula, dimension);
+							int iterar=numiterar();
+							taula=jugar(taula, dimension,iterar);
 							
 					
 					}
@@ -76,9 +78,7 @@ public class Joc {
      * @return Devuelve la tabla inicializada
      * 
      */
-	public static int[][] jugar(int[][] taula, int[]dimension){
-		
-		int iterar=numiterar();
+	public static int[][] jugar(int[][] taula, int[]dimension,int iterar){
 		
 		taula=iteraciones(iterar,taula,dimension);
 		
@@ -95,13 +95,13 @@ public class Joc {
 		
 		taula=iniciarvuit(dimension,taula);
 		
-		int vives=randomvives(dimension);		
+		//int vives=randomvives(dimension);		
 		
 		//Coloca les cel·lules aleatoriament
-		taula=colocarcelulas(dimension,vives,taula);
+		//taula=colocarcelulas(dimension,vives,taula);
 		
 		//Coloca les cel·lules en posicions determinades
-		//taula=colocarcelulasejemplo(dimension,taula);
+		taula=colocarcelulasejemplo(dimension,taula);
 
 		return taula;
 
@@ -173,30 +173,29 @@ public class Joc {
 		}
 		return taula;
 	}
+	
     /**
-     * Método que coloca las celulas en posiciones determinadas por el usuario
+     * Método que coloca las celulas en posiciones determinadas por el autor
      * @param taula Recibe la tabla en su estado inicial en forma de matriz
      * @param dim Recibe las dimensiones del tablero en forma de vector de enteros
      * @return Devuelve la tabla modificada
      */
 	public static int[][] colocarcelulasejemplo(int[] dim, int[][]taula) {
 		
-		taula[0][4]=1;
-		taula[1][4]=1;
-		taula[2][4]=1;
+		int [][]taulaini={
+			{0,0,0,0,0,0,0,0,0},
+			{0,0,0,1,1,1,0,0,0},
+			{0,0,0,0,0,0,0,0,0},
+			{0,1,0,0,0,0,0,1,0},
+			{0,1,0,0,0,0,0,1,0},
+			{0,1,0,0,0,0,0,1,0},
+			{0,0,0,0,0,0,0,0,0},
+			{0,0,0,1,1,1,0,0,0},
+			{0,0,0,0,0,0,0,0,0}
+		};
 		
-		taula[4][0]=1;
-		taula[4][1]=1;
-		taula[4][2]=1;
-		
-		taula[6][4]=1;
-		taula[7][4]=1;
-		taula[8][4]=1;
-		
-		taula[4][6]=1;
-		taula[4][7]=1;
-		taula[4][8]=1;
-		
+		taula=taulaini;
+
 		return taula;
 	}
     /**
