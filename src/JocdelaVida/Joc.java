@@ -173,7 +173,6 @@ public class Joc {
 		}
 		return taula;
 	}
-	
     /**
      * Método que coloca las celulas en posiciones determinadas por el autor
      * @param taula Recibe la tabla en su estado inicial en forma de matriz
