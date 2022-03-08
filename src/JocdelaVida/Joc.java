@@ -244,9 +244,10 @@ public class Joc {
 		return xy;
 	}
     /**
-     * Método que establece el tablero vacio
+     * Método copia el tablero auxiliar en el tablero principal
      * @param taula Recibe la tabla en su estado inicial en forma de matriz
      * @param dimension Recibe las dimensiones del tablero en forma de vector de enteros
+     * @param taulaaux Recibe las dimensiones del tablero auxiliar, con las modificaciones hechas en forma de vector de enteros
      * @return Devuelve la tabla modificada
      */
 	public static int [][] clonartaula(int[]dimension, int[][]taula,int[][]taulaaux){
