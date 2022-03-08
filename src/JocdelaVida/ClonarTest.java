@@ -1,7 +1,5 @@
 package JocdelaVida;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.fail;
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
@@ -17,10 +15,48 @@ public class ClonarTest {
 
 	private int [] dim;
 	private int [][] ini;
+	private int [][] fin;
 	
-	private static int [] [] [] inicial = { 
+	private static int [] [] [] original = { 
 			{
+				{0,0,9,0,0,0,0,0,9},
 				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0}
+			},
+			{ 
+				{0,0,0,0,0,6,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0}
+			
+			},
+			{ 	
+				{0,8,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,0,0,0,0,0,0,0},
+				{0,0,1,0,0,0,0,0,0}
+			}
+
+};
+	private static int [] [] [] copia = { 
+			{
+				{0,0,0,0,0,0,8,0,0},
 				{0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0},
@@ -39,10 +75,11 @@ public class ClonarTest {
 				{0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0}
+				{0,0,0,0,1,0,0,0,0}
 			
 			},
 			{ 	
+				{2,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0},
@@ -50,8 +87,7 @@ public class ClonarTest {
 				{0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0},
 				{0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0},
-				{0,0,0,0,0,0,0,0,0}
+				{0,0,0,0,0,1,0,0,0}
 			}
 
 };
@@ -61,23 +97,25 @@ public class ClonarTest {
 			{9,9},
 			{9,9}
 	};
-	public ClonarTest  (int[][]inicial,int [] dimensions) {
-		this.dim =dimensions;
+	public ClonarTest  (int[][]inicial, int[][]fina, int [] dimensions) {
 		this.ini=inicial;
+		this.fin=fina;
+		this.dim =dimensions;
+		
 	}
 	@Parameters
 	public static Collection<Object[]> numeros() {
 		
 		return Arrays.asList(new Object[][] {
-			{inicial[0], dimensiones[0]},
-			{inicial[1], dimensiones[1]},
-			{inicial[2], dimensiones[2]}
+			{original[0], copia[0], dimensiones[0]},
+			{original[1], copia[1], dimensiones[1]},
+			{original[2], copia[2], dimensiones[2]}
 			
 		});
 	}
 	@Test
-	public void testInicialitzarTauler() {
-		int [][] res = Joc.inicialitzarTauler(dim);
+	public void testClonarTauler() {
+		int [][] res = Joc.clonartaula(dim,ini,fin);
 		assertArrayEquals(ini, res);
 	}
 

@@ -18,7 +18,6 @@ public class JugarTest {
 	private int [][] t1;
 	private int [][] t2;
 	private int [] dim;
-	private int it;
 		
 	private static int [] [] [] entrada = { 
 										{
@@ -102,26 +101,26 @@ public class JugarTest {
 			{9,9}
 	};
 	
-	public JugarTest (int [][] taula1, int[] dimensions, int [][] taula2, int it) {
+	public JugarTest (int [][] taula1, int[] dimensions, int [][] taula2) {
 		this.t1 = taula1;
-		this.t2= taula2;
 		this.dim =dimensions;
-		this.it= it;
+		this.t2= taula2;
+		
 	}
 	@Parameters
 	public static Collection<Object[]> numeros() {
 		
 		return Arrays.asList(new Object[][] {
-			{entrada[0], dimensiones[0],sortida[0],3},
-			{entrada[1], dimensiones[1],sortida[1],3},
-			{entrada[2], dimensiones[2],sortida[2],3}
+			{entrada[0], dimensiones[0],sortida[0]},
+			{entrada[1], dimensiones[1],sortida[1]},
+			{entrada[2], dimensiones[2],sortida[2]}
 			
 		});
 	}
 	@Test
-	public void testJugar() {
+	public void testCelules() {
 		
-		int [][] res = Joc.jugar(t1,dim,it);
+		int [][] res = Joc.celules(dim,t1);
 		assertArrayEquals(t2, res);
 	}
 }

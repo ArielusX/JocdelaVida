@@ -54,7 +54,7 @@ public class Joc {
 							break;
 					case 3:
 							int iterar=numiterar();
-							taula=jugar(taula, dimension,iterar);
+							taula=iteraciones(iterar,taula, dimension);
 							
 					
 					}
@@ -72,18 +72,19 @@ public class Joc {
 		System.out.println("Gracias por jugar");
 	}
     /**
-     * Método que ejecuta la partida
+     * Método que itera los cambios a la tabla el numero de veces determinado anteriormente
+     * @param iterar Recibe el numero de iteraciones que debe llevar a cabo
+     * @param taula Recibe la tabla en forma de matriz
      * @param dimension Recibe las dimensiones del tablero en forma de vector de enteros
-     * @param taula Recibe la tabla vacia
-     * @return Devuelve la tabla inicializada
-     * 
+     * @return Devuelve la tabla modificada
      */
-	public static int[][] jugar(int[][] taula, int[]dimension,int iterar){
-		
-		taula=iteraciones(iterar,taula,dimension);
-		
+	public static int[][] iteraciones(int iterar,int[][]taula, int []dimension) {
+		for(int i=0;i<iterar;i++) {
+			taula=celules(dimension,taula);
+			print(dimension,taula);
+		}
 		return taula;
-	}	
+	}
     /**
      * Método que inicia el tablero
      * @param dimension Recibe las dimensiones del tablero en forma de vector de enteros
@@ -95,13 +96,13 @@ public class Joc {
 		
 		taula=iniciarvuit(dimension,taula);
 		
-		//int vives=randomvives(dimension);		
+		int vives=randomvives(dimension);		
 		
 		//Coloca les cel·lules aleatoriament
-		//taula=colocarcelulas(dimension,vives,taula);
+		taula=colocarcelulas(dimension,vives,taula);
 		
 		//Coloca les cel·lules en posicions determinades
-		taula=colocarcelulasejemplo(dimension,taula);
+		//taula=colocarcelulasejemplo(dimension,taula);
 
 		return taula;
 
@@ -120,20 +121,6 @@ public class Joc {
 			System.out.println("Valor incorrecto");
 		}
 		return n;
-	}
-    /**
-     * Método que itera los cambios a la tabla el numero de veces determinado anteriormente
-     * @param iterar Recibe el numero de iteraciones que debe llevar a cabo
-     * @param taula Recibe la tabla en forma de matriz
-     * @param dimension Recibe las dimensiones del tablero en forma de vector de enteros
-     * @return Devuelve la tabla modificada
-     */
-	public static int[][] iteraciones(int iterar,int[][]taula, int []dimension) {
-		for(int i=0;i<iterar;i++) {
-			taula=celules(dimension,taula);
-			print(dimension,taula);
-		}
-		return taula;
 	}
     /**
      * Método que establece el tablero vacio
@@ -257,6 +244,22 @@ public class Joc {
 		return xy;
 	}
     /**
+     * Método que establece el tablero vacio
+     * @param taula Recibe la tabla en su estado inicial en forma de matriz
+     * @param dimension Recibe las dimensiones del tablero en forma de vector de enteros
+     * @return Devuelve la tabla modificada
+     */
+	public static int [][] clonartaula(int[]dimension, int[][]taula,int[][]taulaaux){
+		for (int i = 0; i < dimension[0]; i++) {
+			for (int j = 0; j < dimension[1]; j++) { 
+				
+				taula[i][j] = taulaaux[i][j];
+	
+			}
+		}
+		return taula;
+	}
+    /**
      * Método que lleva a cabo los cambios de estado del tablero
      * @param taula Recibe la tabla en su estado inicial en forma de matriz
      * @param dim Recibe las dimensiones del tablero en forma de vector de enteros
@@ -296,7 +299,7 @@ public class Joc {
 				}
 			}
 		}
-		taula=taulaaux.clone();
+		taula=clonartaula(dim,taula,taulaaux);
 		return taula;
 	}
     /**
